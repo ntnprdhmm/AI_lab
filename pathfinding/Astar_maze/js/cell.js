@@ -35,6 +35,22 @@ class Cell {
         }
     }
 
+    drawPoint(color) {
+        if (color) {
+            fill(color)
+        } else {
+            fill(0);
+        }
+        strokeWeight(1);
+        stroke(255);
+        ellipse(
+            this._x * cellWidth + cellWidth / 2,
+            this._y * cellHeight + cellHeight / 2,
+            cellWidth / 2,
+            cellHeight / 2
+        );
+    }
+
     draw(color) {
         // draw the cell
         if (color) {
@@ -42,9 +58,11 @@ class Cell {
         } else {
             fill(255);
         }
+        strokeWeight(1);
         stroke(255);
         rect(this._x * cellWidth, this._y * cellHeight, cellWidth - 1, cellHeight - 1);
         // draw the cell's walls
+        strokeWeight(4);
         stroke(0);
         if (!this._top) {
             line(

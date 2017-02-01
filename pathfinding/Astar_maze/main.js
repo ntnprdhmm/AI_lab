@@ -129,7 +129,7 @@ function draw() {
 
 	if (finalPath) {
         for (let i = 0; i < finalPath.length; i++) {
-            finalPath[i].draw(color(100, 181, 246));
+			finalPath[i].drawPoint(color(100, 181, 246));
         }
     } else {
 		for (let i = 0; i < closedSet.length; i++) {
@@ -137,7 +137,7 @@ function draw() {
 		}
 	}
 
-	start.draw(color(0,0,0));
-	end.draw(color(0,0,0));
+	start.drawPoint(color(0,0,0));
+	end.drawPoint(color(0,0,0));
 
 }
