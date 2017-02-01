@@ -9,6 +9,30 @@ class Cell {
         this._right = false;
         this._bot = false;
         this._left = false;
+        // A* attriutes
+        this._neightbors = [];
+        this._previous = null;
+        this._f = 0;
+        this._g = 0;
+        this._h = 0;
+    }
+
+    addNeighbors(grid) {
+        const x = this._x;
+        const y = this._y;
+
+        if (this._right && x < cols-1) {
+            this._neightbors.push(grid[x+1][y]);
+        }
+        if (this._left && x > 0) {
+            this._neightbors.push(grid[x-1][y]);
+        }
+        if (this._bot && y < rows-1) {
+            this._neightbors.push(grid[x][y+1]);
+        }
+        if (this._top && y > 0) {
+            this._neightbors.push(grid[x][y-1]);
+        }
     }
 
     draw(color) {
@@ -56,6 +80,24 @@ class Cell {
         }
     }
 
+    // getters and setters
+
+    get f() {
+        return this._f;
+    }
+
+    get g() {
+        return this._g;
+    }
+
+    get h() {
+        return this._h;
+    }
+
+    get previous() {
+        return this._previous;
+    }
+
     get x() {
         return this._x;
     }
@@ -94,6 +136,22 @@ class Cell {
 
     set left(v) {
         this._left = v;
+    }
+
+    set f(newF) {
+        this._f = newF;
+    }
+
+    set g(newG) {
+        this._g = newG;
+    }
+
+    set h(newH) {
+        this._h = newH;
+    }
+
+    set previous(newPrevious) {
+        this._previous = newPrevious;
     }
 
 }
