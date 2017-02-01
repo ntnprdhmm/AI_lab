@@ -1,5 +1,5 @@
-const cols = 25;
-const rows = 25;
+const cols = 50;
+const rows = 50;
 let spotWidth, spotHeight;
 
 let openSet = [];   // need to be evaluated
@@ -33,7 +33,10 @@ function setup() {
     }
     // set start and end points
     start = grid[0][0];         // top left corner
-    end = grid[cols-1][rows/2]; // bottom right corner
+    end = grid[cols-1][rows-1]; // bottom right corner
+    // start and end can't be a wall
+    start.isWall = false;
+    end.isWall = false;
 
     openSet.push(start);
 }
@@ -69,8 +72,9 @@ function draw() {
         closedSet.push(current);
         for (let i = 0; i < current._neightbors.length; i++) {
             let neighbor = current._neightbors[i];
+            let newPath = false; 
 
-            if (!closedSet.includes(neighbor)) {
+            if (!closedSet.includes(neighbor) && !neighbor.isWall) {
                 // + 1 because everything is at a distance of 1
                 let tempG = current.g + 1;
 
@@ -78,21 +82,27 @@ function draw() {
                     // check if we've reach this Spot with a better path
                     if (tempG < neighbor.g) {
                         neighbor.g = tempG;
+                        newPath = true; // found a better new path
                     }
                 } else {
                     // else we have discovered a new Spot
                     neighbor.g = tempG;
                     openSet.push(neighbor);
+                    newPath = true; // first path to this new Spot (it's his best G for he moment)
                 }
 
-                neighbor.h = heuristic(neighbor, end);
-                neighbor.f = neighbor.g + neighbor.h;
-                neighbor.previous = current;
+                // calculate if it's a new path
+                if (newPath) {
+                    neighbor.h = heuristic(neighbor, end);
+                    neighbor.f = neighbor.g + neighbor.h;
+                    neighbor.previous = current;
+                }
             }
         }
 
     } else {
-        // no solution
+        noLoop();
+        console.log('No solution');
     }
 
     background(0);
@@ -143,6 +153,11 @@ class Spot {
         this._f = 0;
         this._g = 0;
         this._h = 0;
+        // is this Spot an a wall (obstacle) ?
+        this._isWall = false;
+        if (random(1) < 0.3) {
+            this._isWall = true;
+        }
     }
 
     get x() {
@@ -165,6 +180,10 @@ class Spot {
         return this._h;
     }
 
+    get isWall() {
+        return this._isWall;
+    }
+
     get previous() {
         return this._previous;
     }
@@ -185,9 +204,14 @@ class Spot {
         this._previous = newPrevious;
     }
 
+    set isWall(newIsWall) {
+        this._isWall = newIsWall;
+    }
+
     addNeighbors(grid) {
         const x = this._x;
         const y = this._y;
+        // row neighbors
         if (x < cols-1) {
             this._neightbors.push(grid[x+1][y]);
         }
@@ -200,11 +224,28 @@ class Spot {
         if (y > 0) {
             this._neightbors.push(grid[x][y-1]);
         }
+        // diagonal neighbors
+        if (x > 0 && y > 0) {
+            this._neightbors.push(grid[x-1][y-1]);
+        }
+        if (x > 0 && y < rows-1) {
+            this._neightbors.push(grid[x-1][y+1]);
+        }
+        if (x < cols-1 && y > 0) {
+            this._neightbors.push(grid[x+1][y-1]);
+        }
+        if (x < cols-1 && y < rows-1) {
+            this._neightbors.push(grid[x+1][y+1]);
+        }
     }
 
     show(col) {
-        fill(col);
-        noStroke(0);
+        if (this._isWall) {
+            fill(0);
+        } else {
+            fill(col);
+        }
+        noStroke();
         // draw each spot (a rectangle). -1 to show the borders
         rect(this._x * spotWidth, this._y * spotHeight, spotWidth - 1, spotHeight - 1);
     }
