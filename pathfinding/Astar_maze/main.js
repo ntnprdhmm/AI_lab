@@ -1,5 +1,5 @@
-const cols = 10;
-const rows = 10;
+const cols = 20;
+const rows = 20;
 
 let cellWidth;
 let cellHeight;
@@ -8,9 +8,11 @@ let maze;
 let start;
 let end;
 
-let openSet = [];   // need to be evaluated
-let closedSet = []; // already evaluated
-let finalPath;		// path found
+let openSet;    // need to be evaluated
+let closedSet;  // already evaluated
+let finalPath;  // path found
+
+let reset = false;
 
 function setup() {
 	// create the canvas and put it into the #maze div on the html page
@@ -21,7 +23,24 @@ function setup() {
 	cellWidth = (width-1) / cols;
 	cellHeight = (height-1) / rows;
 
-	// generate the maze
+	initMaze();
+
+    // dont draw for the moment. Wait until the user click on 'search'
+    noLoop();
+
+    document.getElementById('search').addEventListener('click', _ => {
+        loop();
+    });
+    document.getElementById('reset').addEventListener('click', _ => {
+        // draw 1 time to reset the canvas
+        loop();
+        reset = true;
+        initMaze();
+    });
+}
+
+function initMaze() {
+    // generate the maze
 	const mazePattern = generateMaze(cols, rows);
 	maze = buildMaze(mazePattern);
 
@@ -35,9 +54,15 @@ function setup() {
 	start = maze[0][0];
 	end = maze[cols-1][rows-1];
 
+    openSet = [];
+    closedSet = [];
+    finalPath = null;
 	openSet.push(start);
 }
 
+/**
+ * Remove toRemove from the arr array
+ */
 function removeFromArray(arr, toRemove) {
     return arr.filter(e => e != toRemove);
 }
@@ -50,14 +75,17 @@ function heuristic(a, b) {
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-// draw is a loop, so we don't need a while loop for the algorithm
+/**
+ * draw is a loop, so we don't need a while loop for the algorithm
+ */
 function draw() {
 	
 	background(0);
 
-	if (openSet.length > 0) {
-        
-		// search the cell with the lowest F value
+    // if it's a reset draw, don't start the search
+    if (!reset) {
+
+        // search the cell with the lowest F value
         let lowestIndex = 0;
         for (let i = 0; i < openSet.length; i++) {
             if (openSet[i].f < openSet[lowestIndex].f) {
@@ -66,7 +94,7 @@ function draw() {
         }
         let current = openSet[lowestIndex];
 
-		// check if the current Cell is the maze exit
+        // check if the current Cell is the maze exit
         if (current === end) {
             // find the path
             finalPath = [];
@@ -81,11 +109,11 @@ function draw() {
             console.log("DONE !!");
         }
 
-		// tell the algorithm this Cell has been evaluated
+        // tell the algorithm this Cell has been evaluated
         openSet = removeFromArray(openSet, current);
         closedSet.push(current);
 
-		for (let i = 0; i < current._neightbors.length; i++) {
+        for (let i = 0; i < current._neightbors.length; i++) {
             let neighbor = current._neightbors[i];
             let newPath = false; 
 
@@ -115,9 +143,6 @@ function draw() {
             }
         }
 
-    } else {
-        noLoop();
-        console.log('No solution');
     }
 	
 	// draw each cell of the maze grid
@@ -139,5 +164,11 @@ function draw() {
 
 	start.drawPoint(color(0,0,0));
 	end.drawPoint(color(0,0,0));
+
+    // end the reset
+    if (reset) {
+        reset = false;
+        noLoop();
+    }
 
 }
