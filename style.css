@@ -18,6 +18,10 @@
     background: #3F51B5;
 }
 
+.button:hover {
+    background: #1A237E;
+}
+
 /*
 * -- link --
 */
@@ -43,6 +47,10 @@
 /*
 * === GLOBAL ===
 */
+
+* {
+    box-sizing: border-box;
+}
 
 html, body {
     margin: 0;

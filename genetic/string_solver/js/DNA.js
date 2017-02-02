@@ -37,7 +37,7 @@ class DNA {
      * Convert the DNA genes to a string and return it
      * 
      */
-    get phrase () {
+    get sentence () {
         return this._genes.join('');
     }
 
