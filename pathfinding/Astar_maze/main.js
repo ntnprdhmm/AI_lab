@@ -16,7 +16,7 @@ let reset = false;
 
 function setup() {
 	// create the canvas and put it into the #maze div on the html page
-    let canvas = createCanvas(400, 400);
+    let canvas = createCanvas(500, 500);
 	canvas.parent('maze');
 
 	// calculate the size of each cell
