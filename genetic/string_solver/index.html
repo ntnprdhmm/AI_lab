@@ -1,51 +1,131 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Basic genetic algorithm</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <!-- left column -->
-        <div id="left">
-            <table id="current">
-                <tr>
-                    <th>Generation</th>
-                    <th>Phrase</th>
-                    <th>Fitness</th>
-                </tr>
-            </table>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Genetic algorithm - string solver</title>
+        <link rel="stylesheet" href="../../style.css">
+        <style>
+            #conf {
+                border: 1px solid #ccc;
+                text-align: center;
+                margin-top: 20px;
+                padding: 10px 5px;
+                background-color: #fff;
+            }
+            #conf .form-group {
+                display: block;
+                width: 100%;
+            }
+            @media (min-width: 650px) {
+                #conf .form-group {
+                    display: table-cell;
+                    width: 31%;
+                }
+            }
+            #conf .form-group .form-input[type="text"] {
+                width: 100%;
+                margin: 10px 0;
+                padding: 12px 20px;
+                border: 1px solid #ccc;
+            }
+            #conf .form-group .form-label {
+                color: #3F51B5;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            #conf .form-group p {
+                font-size: 12px;
+                margin-top: 0;
+            }
+
+            .table-container {
+                margin-top: 20px;
+                background: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+            }
+            #results {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #results thead {
+                color: #3F51B5;
+            }
+            #results td {
+                text-align: center;
+            }
+            #results td, th {
+                text-align: center;
+                border: 1px solid #ccc;
+                width: 45%;
+            }
+            #results .first {
+                width: 10%;
+            }
+        </style>
+    </head>
+    <body>
+         <!-- TOP -->
+        <div class="page-header">
+            <div class="header-title">
+                <h1>String solver</h1>
+            </div>
+            <div class="header-links">
+                <div class="container">
+                    <div>
+                        <a href="https://github.com/prudywsh/AI_lab/tree/master/genetic/string_solver" class="custom-link">See the source code</a>
+                    </div>
+                    <div>
+                        <a href="../../index.html" class="custom-link back">Go back</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- right column -->
-        <div id="right">
-            <!-- form -->
-            <div id="header">
-                <form id="search-form">
+        <!-- CONTENT -->
+        <div class="container">
+            <!-- conf form -->
+            <div id="conf">
+                <div class="input-container">
                     <div class="form-group"> 
-                        <label class="form-label" for="phrase">Phrase</label>
+                        <label class="form-label" for="sentence">Sentence</label>
                         <div class="form-input-container">
-                            <input class="form-input" type="text" id="phrase" value="hello world">
+                            <input class="form-input" type="text" id="sentence" value="hello world">
                         </div>
+                        <p>Enter the sentence you want the algorithm to find (only alphabetical characters and spaces).</p>
                     </div>
                     <div class="form-group"> 
                         <label class="form-label" for="popsize">Population size</label>
                         <div class="form-input-container">
                             <input class="form-input" type="text" id="popsize" value="1000">
                         </div>
+                        <p>Number of genes per generation (Advice: at least 100, at most 100000)</p>
                     </div>
                     <div class="form-group"> 
                         <label class="form-label" for="rate">Mutation rate</label>
                         <div class="form-input-container">
                             <input class="form-input" type="text" id="rate" value="0.02">
                         </div>
+                        <p>Usefull to reach the goal, so at least 0.1. But not too much, because it change randomly some letters (max : depend of the population and the sentence length).</p>
                     </div>
-                    <div class="btn-container">
-                        <button id="search" class="btn">Search</button>
-                    </div>
-                </form>
+                </div>
+                <div class="btn-container">
+                    <button id="search" class="button">Search</button>
+                </div>
             </div>
-            <!-- previous results -->
+            <!-- current conf results table -->
+            <div class="table-container">
+                <table id="results">
+                    <thead>
+                        <tr>
+                            <th class="first">Generation</th>
+                            <th>Sentence</th>
+                            <th>Fitness</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body"></tbody>
+                </table>
+            </div>
+            <!-- previous results --><!--
             <div id="hist">
                 <table id="hist-table">
                     <tr>
@@ -56,11 +136,17 @@
                         <th>Mutation rate</th>
                     </tr>
                 </table>
+            </div>-->
+        </div>
+        <!-- BOTTOM -->
+        <div class="footer">
+            <div class="signature">
+                <a class="custom-link" href="https://twitter.com/prudywsh">@prudywsh</a>
             </div>
         </div>
-    </div>
-    <script src="scripts/DNA.js"></script>
-    <script src="scripts/Population.js"></script>
-    <script src="scripts/main.js"></script>
-</body>
+        <!-- scripts -->
+        <script src="./js/DNA.js"></script>
+        <script src="./js/Population.js"></script>
+        <script src="./js/main.js"></script>
+    </body>
 </html>

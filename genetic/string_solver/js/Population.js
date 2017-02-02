@@ -3,45 +3,45 @@ class Population {
     /**
      * Creates an instance of Population.
      * 
-     * @param {any} phrase      => the target
+     * @param {any} sentence    => the target
      * @param {any} len         => the populationLength
      * @param {any} mutation    => the mutation rate
      * 
      */
-    constructor (phrase, len, mutation) {
-        this._phrase = phrase;          // the phrase to search
+    constructor (sentence, len, mutation) {
+        this._sentence = sentence;      // the sentence to search
         this._population = [];          // Array of DNA (the current generation)
         this._mutation = mutation;      // mutation rate
         this._generation = 0;           // number of generation 
         this._matingPool = [];          // the next generation of DNA
-        this._best = "";                // store the best phrase found in the last generation
-        this._bestScore = 0;            // fitness of the best phrase
-        this._finished = false;         // true when the phrase has been found
+        this._best = "";                // store the best sentence found in the last generation
+        this._bestScore = 0;            // fitness of the best sentence
+        this._finished = false;         // true when the sentence has been found
 
-        this.initPopulation(len, phrase.length);
+        this.initPopulation(len, sentence.length);
     }
 
     /**
      * Init the population of DNA
      * 
      * @param {any} populationLength
-     * @param {any} phraseLength
+     * @param {any} sentenceLength
      * 
      */
-    initPopulation (populationLength, phraseLength) {
+    initPopulation (populationLength, sentenceLength) {
         for (let i = 0; i < populationLength; i++) {
-            this._population[i] = new DNA(phraseLength);
+            this._population[i] = new DNA(sentenceLength);
         }
         this.calcFitness();
     }
 
     /**
-     * Calculate the fitness of each DNA of this population on this.phrase
+     * Calculate the fitness of each DNA of this population on this.sentence
      * 
      */
     calcFitness () {
         for (let i = 0; i < this._population.length; i++) {
-            this._population[i].calcFitness(this._phrase);
+            this._population[i].calcFitness(this._sentence);
         }
     }
 
@@ -87,7 +87,7 @@ class Population {
     }
 
     /**
-     * Search the best phrase in the population and check if it's the target phrase
+     * Search the best sentence in the population and check if it's the target sentence
      * 
      */
     evaluate () {
@@ -101,9 +101,9 @@ class Population {
             }
         }
 
-        this._best = this._population[index].phrase;
+        this._best = this._population[index].sentence;
         this._bestScore = score;
-        // check if the best phrase is the right
+        // check if the best sentence is the right
         if (score == 1) {
             this._finished = true;
         }

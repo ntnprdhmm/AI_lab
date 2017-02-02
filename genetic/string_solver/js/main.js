@@ -1,8 +1,8 @@
 let app = {
     _histTableElement: document.getElementById('hist-table'),
-    _currentlistElement: document.getElementById('current'),
+    _currentResults: document.getElementById('results-body'),
     _popsizeElement: document.getElementById('popsize'),
-    _phraseElement: document.getElementById('phrase'),
+    _sentenceElement: document.getElementById('sentence'),
     _rateElement: document.getElementById('rate'),
     _searchElement: document.getElementById('search')
 }
@@ -13,9 +13,9 @@ let alphabet = 'abcdefghijklmnopqrstuvwxyz '.split('');
  * init the app global, which contains the data for the GA
  */
 function setup () {
-    // target phrase
-    app._target = app._phraseElement.value;
-    if(!checkPhrase(app._target)) {
+    // target sentence
+    app._target = app._sentenceElement.value;
+    if(!checkSentence(app._target)) {
         app._target = "hello world abc";
     }
     // population size
@@ -36,29 +36,27 @@ function setup () {
  * Update the data on the screen
  */
 function draw () {
-    app._currentlistElement.innerHTML +=    '<tr>' +
-                                                '<td>' + app._population._generation + '</td>' +
-                                                '<td>' + app._population._best +'</td>' +
-                                                '<td>' + app._population._bestScore + '</td>' +
-                                            '</tr>';
+    app._currentResults.innerHTML +=    '<tr>' +
+                                            '<th class="first">' + app._population._generation + '</th>' +
+                                            '<td>' + app._population._best +'</td>' +
+                                            '<td>' + Math.round(app._population._bestScore * 100) / 100 + '</td>' +
+                                        '</tr>';
 }
 
 /**
  * Clean the table
  */
 function clean () {
-    for (let i = 0; i < app._population._generation; i++) {
-        app._currentlistElement.deleteRow(1);
-    }
+    app._currentResults.innerHTML = "";
 }
 
 /**
- * check if the phrase contains only 
+ * check if the sentence contains only 
  * 
  * @param {any} str
  * 
  */
-function checkPhrase (str) {
+function checkSentence (str) {
     for (let i = 0; i < str.length; i++) {
         if (alphabet.indexOf(str[i]) == -1) {
             return false;
@@ -71,7 +69,7 @@ function checkPhrase (str) {
  * Run the algorithm
  */
 function run () {
-    // while the phrase is still not found, run the algorithm
+    // while the sentence is still not found, run the algorithm
     while (!app._population._finished) {
         // generate the mating pool
         app._population.naturalSelection();
@@ -86,7 +84,7 @@ function run () {
     // write the result in the hist
     app._histTableElement.innerHTML += '<tr>' +
                                             '<td>' + app._histTableElement.getElementsByTagName("tr").length + '</td>' +
-                                            '<td>' + app._population._phrase + '</td>' + 
+                                            '<td>' + app._population._sentence + '</td>' + 
                                             '<td>' + app._population._generation + '</td>' + 
                                             '<td>' + app._population._population.length + '</td>' +
                                             '<td>' + app._population._mutation + '</td>' +

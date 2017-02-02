@@ -1,0 +1,172 @@
+/*
+* === ACTIONS ===
+*/
+
+/*
+* -- button --
+*/
+
+.button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    background: #3F51B5;
+}
+
+.button:hover {
+    background: #1A237E;
+}
+
+/*
+* -- link --
+*/
+
+.custom-link:link {
+    text-decoration: none;
+    color: #1e88e5;
+}
+
+.custom-link:visited {
+    text-decoration: none;
+    color: #1e88e5;
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+}
+
+.custom-link:active {
+    text-decoration: underline;
+}
+
+/*
+* === GLOBAL ===
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    background-color: #FAFAFA;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 110px;
+}
+
+h1, h2 {
+    text-transform: uppercase;
+}
+
+/*
+* -- header --
+*/
+
+.header-title {
+    padding: 15px;
+    text-align: center;
+    background-color: #3F51B5;
+    color: #fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 5;
+}
+
+.header-links {
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    text-align: right;
+}
+
+.header-links .container div {
+    display: inline-block;
+}
+
+.back {
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: 2px solid #333;
+}
+
+/*
+* -- footer --
+*/
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer .signature {
+    height: 45px;
+    color: #fff;
+    background: #333;
+    text-align: center;
+    line-height: 45px;
+}
+
+.signature .custom-link {
+    color: #fff;
+}
+
+/*
+* === CONTAINER ===
+*/
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+/*
+* === PAGE CONTENT ===
+*/
+
+.custom-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.project {
+    border-left: 5px solid #f50057;
+    padding: 3px 0 3px 10px;
+    margin-bottom: 10px;
+}
