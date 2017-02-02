@@ -27,22 +27,35 @@
         </style>
     </head>
     <body>
+        <!-- TOP -->
         <div class="page-header">
-            <h1>Maze solver</h1>
+            <div class="header-title">
+                <h1>Maze solver</h1>
+            </div>
+            <div class="header-links">
+                <div class="container">
+                    <div>
+                        <a href="https://github.com/prudywsh/AI_lab/tree/master/pathfinding/Astar_maze" class="custom-link">See the source code</a>
+                    </div>
+                    <div>
+                        <a href="../../index.html" class="custom-link back">Go back</a>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- CONTENT -->
         <div id="maze"></div>
         <div class="maze-actions">
             <button class="button" id="search">Search</button>
             <button class="button" id="reset">Reset</button>
         </div>
+        <!-- BOTTOM -->
         <div class="footer">
-            <div class="container go-back">
-                <a class="custom-link" href="../../index.html">Go back</a>
-            </div>
             <div class="signature">
                 <a class="custom-link" href="https://twitter.com/prudywsh">@prudywsh</a>
             </div>
         </div>
+        <!-- SCRIPTS -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js"></script>
         <script src="./js/cell.js"></script>
         <script src="./js/maze_generator.js"></script>
