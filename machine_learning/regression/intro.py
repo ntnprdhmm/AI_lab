@@ -1,6 +1,9 @@
 import pandas as pd
 import quandl
 import math
+import numpy as np
+from sklearn import preprocessing, cross_validation, svm
+from sklearn.linear_model import LinearRegression
 
 # df = DataFrame (pandas)
 df = quandl.get('WIKI/GOOGL')
@@ -20,5 +23,23 @@ df.fillna(-99999, inplace=True)
 forecast_out = int(math.ceil(0.01*len(df)))
 
 df['label'] = df[forecast_col].shift(-forecast_out)
+# drop rows where there is no labels
 df.dropna(inplace=True)
-print(df.tail())
+
+# features : everything except label column
+X = np.array(df.drop(['label'], 1))
+# labels : the label column of course
+y = np.array(df['label'])
+
+# normalization
+X = preprocessing.scale(X)
+
+# fit classifier with 20% of our data
+X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
+clf = LinearRegression()
+clf.fit(X_train, y_train)
+
+# test classifier (accuracy)
+accuracy = clf.score(X_test, y_test)
+
+print(accuracy)
