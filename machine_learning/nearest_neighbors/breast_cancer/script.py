@@ -16,7 +16,9 @@ def k_nearest_neighbors(data, new_feature, k=3):
     # then, find the group of the new feature
     result = Counter(sort).most_common(1)[0][0] 
 
-    return result
+    confidence = Counter(sort).most_common(1)[0][1] / k
+
+    return result, confidence
 
 df = pd.read_csv('breast_cancer_wisconsin.data')
 df.replace('?', -99999, inplace=True)
@@ -55,8 +57,10 @@ total = 0
 
 for group in test_set:
     for data in test_set[group]:
-        result = k_nearest_neighbors(train_set, data, k=5)
+        result, confidence = k_nearest_neighbors(train_set, data, k=5)
         if group == result:
             correct += 1
+        else:
+            print('Confidence : %.4f' % (confidence))
         total += 1
 print('Accuracy : %.4f' % (correct/total))
