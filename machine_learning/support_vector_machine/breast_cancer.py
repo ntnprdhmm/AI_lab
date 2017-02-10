@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from sklearn import preprocessing, model_selection, neighbors
+from sklearn import preprocessing, model_selection, svm
 
-df = pd.read_csv('../../data/breast_cancer_wisconsin.data')
+df = pd.read_csv('../data/breast_cancer_wisconsin.data')
 # -99999 is recognized as an outlier (we don't wan't to drop it, but care of it)
 df.replace('?', -99999, inplace=True)
 df = df.drop('id', 1)
@@ -12,7 +12,7 @@ y = np.array(df['class'])
 
 X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
 
-clf = neighbors.KNeighborsClassifier()
+clf = svm.SVC()
 clf.fit(X_train, y_train)
 
 accuracy = clf.score(X_test, y_test)

@@ -20,7 +20,7 @@ def k_nearest_neighbors(data, new_feature, k=3):
 
     return result, confidence
 
-df = pd.read_csv('breast_cancer_wisconsin.data')
+df = pd.read_csv('../../data/breast_cancer_wisconsin.data')
 df.replace('?', -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 
