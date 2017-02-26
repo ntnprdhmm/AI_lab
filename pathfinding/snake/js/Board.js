@@ -18,10 +18,12 @@ class Board {
             }
             this.board.push(row);
         }
-        // instantiate the snake
+        // instantiate the snake and put it on the grid
         this.snake = new Snake(this.randomEmptyCell());
-        // put the snake on the grid
         this.board[this.snake.positions[0].j][this.snake.positions[0].i].type = "snake head";
+        // generate food on the map
+        this.food = this.randomEmptyCell();
+        this.board[this.food.j][this.food.i].type = "food";
     }
 
     draw() {

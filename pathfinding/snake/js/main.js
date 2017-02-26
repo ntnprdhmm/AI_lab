@@ -9,7 +9,6 @@ function setup() {
 }
 
 function draw() {
-    background(0)
     board.draw();
     noLoop()
 }
