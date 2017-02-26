@@ -44,6 +44,10 @@ class Cell {
         rect(this.i * this.width, this.j * this.height, this.width - 1, this.height - 1);
     }
 
+    empty() {
+        this.type = 'empty';
+    }
+
     isEmpty() {
         return this.type === 'empty';
     }

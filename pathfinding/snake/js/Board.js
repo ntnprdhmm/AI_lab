@@ -35,6 +35,35 @@ class Board {
         }
     }
 
+    updateSnakeDirection(direction) {
+        this.snake.direction = direction;
+    }
+
+    moveSnake() {
+        // calculate the new position (depending of the direction)
+        let nextPosition = this.snake.getNextPosition();
+        // if the direction is not valid, kill the snake
+        if (!this.isValidMove(nextPosition.i, nextPosition.j)) {
+            this.snake.kill();
+        } else {
+            // remove the tail on the board
+            let tail = this.snake.getTailPosition();
+            this.board[tail.j][tail.i].empty();
+            // first, shift the positions to the right
+
+            // replace the head position and put it on the board
+            this.snake.positions[0] = nextPosition;
+            this.board[nextPosition.j][nextPosition.i].type = 'snake head';
+        }
+    }
+
+    /**
+     *  Return true if the point is on the board, and the cell is empty
+     */
+    isValidMove(i, j) {
+        return i >= 0 && i < this.cols && j >= 0 && j < this.rows && this.board[j][i].isEmpty();
+    }
+
     /**
      *  Return a random empty cell of the board
      */
