@@ -1,12 +1,12 @@
 class Snake {
 
-    constructor(coordinates) {
+    constructor(coordinates, nbCols) {
         this.positions = [{
             i: coordinates.i,
             j: coordinates.j
         }];
         this.size = 1;
-        this.direction = (coordinates.i < 5) ? 'left' : 'right';
+        this.direction = (coordinates.i < nbCols/2) ? 'right' : 'left';
     }
 
     /**

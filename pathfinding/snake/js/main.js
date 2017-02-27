@@ -1,4 +1,16 @@
 let board;
+let score_el = document.getElementById('score');
+let playerButton_el = document.getElementById('btn-player');
+let popup_el = document.getElementsByClassName('popup')[0];
+let popupMessage_el = popup_el.getElementsByClassName('popup-message')[0];
+let play = false;
+
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
 
 /**
  *  P5.js function
@@ -20,8 +32,12 @@ function setup() {
  */
 function draw() {
     background(51, 51, 51);
-    board.draw();
-    board.setSnakePosition();
+    if (play) {
+        board.draw();
+        board.setSnakePosition();
+    } else {
+        noLoop();
+    }
 }
 
 /**
@@ -39,4 +55,35 @@ function keyPressed() {
     } else if (keyCode == LEFT_ARROW) {
         board.setSnakeDirection('left');
     }
+}
+
+// ********
+// OTHER FUNCTIONS
+// ********
+
+playerButton_el.addEventListener('click', _ => {
+    console.log('new game');
+    board = new Board();
+    popup_el.style.display = 'none';
+    play = true;
+    loop();
+});
+
+/**
+ *  Stop the game and show the popup
+ */
+function stopLoop(message) {
+    console.log('game stopped');
+    noLoop();
+    play = false;
+    popupMessage_el.innerHTML = message;
+    popup_el.style.display = 'block';
+}
+
+/**
+ *  Update the score on the page
+ *  @param score : the new score
+ */
+function setScore(score) {
+    score_el.innerHTML = score;
 }

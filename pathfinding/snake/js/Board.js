@@ -25,11 +25,12 @@ class Board {
             this.board.push(row);
         }
         // instantiate the snake and put it on the grid
-        this.snake = new Snake(this.randomEmptyCell());
+        this.snake = new Snake(this.randomEmptyCell(), this.cols);
         this.board[this.snake.positions[0].j][this.snake.positions[0].i].type = "snake head";
         // generate food on the map
         this.food = this.randomEmptyCell();
         this.board[this.food.j][this.food.i].type = "food";
+        setScore(this.snake.size);
     }
 
     /**
@@ -62,13 +63,14 @@ class Board {
         if (!this.isValidMove(nextPosition.i, nextPosition.j)) {
             // remove each part of the snake's tail
             for (let part of this.snake.kill()) {
-                console.log(part);
                 this.board[part.j][part.i].empty();
             }
+            stopLoop("You killed your snake :'(");
         } else {
             // if it's food, pick it !
             if (this.board[nextPosition.j][nextPosition.i].type == 'food') {
                 this.eatFood();
+                setScore(this.snake.size);
             } else {
                 // remove the tail on the board
                 let tail = this.snake.getTailEndPosition();
