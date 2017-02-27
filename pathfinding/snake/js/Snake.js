@@ -11,6 +11,12 @@ class Snake {
 
     kill() {
         this.positions = [this.positions[0]];
+        console.log('You died !');
+    }
+
+    eat() {
+        //this.size++;
+        console.log('Food !');
     }
 
     /**

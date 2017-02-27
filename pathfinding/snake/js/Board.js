@@ -46,6 +46,10 @@ class Board {
         if (!this.isValidMove(nextPosition.i, nextPosition.j)) {
             this.snake.kill();
         } else {
+            // if it's food, pick it !
+            if (this.board[nextPosition.j][nextPosition.i].type == 'food') {
+                this.eatFood();
+            }
             // remove the tail on the board
             let tail = this.snake.getTailPosition();
             this.board[tail.j][tail.i].empty();
@@ -57,11 +61,20 @@ class Board {
         }
     }
 
+    eatFood() {
+        this.snake.eat();
+        // remove the food of the board
+        this.board[this.food.j][this.food.i].empty();
+        // generate new food and draw it
+        this.food = this.randomEmptyCell();
+        this.board[this.food.j][this.food.i].type = 'food';
+    }
+
     /**
      *  Return true if the point is on the board, and the cell is empty
      */
     isValidMove(i, j) {
-        return i >= 0 && i < this.cols && j >= 0 && j < this.rows && this.board[j][i].isEmpty();
+        return i >= 0 && i < this.cols && j >= 0 && j < this.rows && this.board[j][i].isFreeCell();
     }
 
     /**

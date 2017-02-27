@@ -48,6 +48,10 @@ class Cell {
         this.type = 'empty';
     }
 
+    isFreeCell() {
+        return this.type === 'empty' || this.type === 'food';
+    }
+
     isEmpty() {
         return this.type === 'empty';
     }
