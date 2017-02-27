@@ -9,20 +9,33 @@ class Snake {
         this.direction = (coordinates.i < 5) ? 'left' : 'right';
     }
 
+    /**
+     *  Kill the snake
+     *  => Remove his body (keep only the head in this.positions)
+     */
     kill() {
-        this.positions = [this.positions[0]];
         console.log('You died !');
-    }
-
-    eat(i, j) {
-        this.size++;
-        this.positions.unshift({i,j});
-        console.log('Food !');
+        let tail = this.positions.slice(1);
+        this.size = 1;
+        this.positions = [this.positions[0]];
+        return tail;
     }
 
     /**
-     *  Shift the positions
-     *  @p : the new position
+     *  The snake become bigger of 1 when he eat food
+     *  To make it bigger, just push new position at the beggining of this.positions (his new head)
+     *  @param i
+     *  @param j
+     */
+    eat(i, j) {
+        console.log('Food !');
+        this.size++;
+        this.positions.unshift({i,j});
+    }
+
+    /**
+     *  Shift the positions and update the head
+     *  @param p : the new head position
      */
     move(p) {
         for (let i = this.size-1; i > 0; i--) {
@@ -34,7 +47,7 @@ class Snake {
     /**
      *  Return the position of the last part of the snake (it will be removed of the board because the snake is moving)
      */
-    getTailPosition() {
+    getTailEndPosition() {
         return this.positions[this.size - 1];
     }
 

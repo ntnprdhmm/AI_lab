@@ -8,6 +8,9 @@ class Cell {
         this.type = type;
     }
 
+    /**
+     *  Draw the cell on the screen, depending of his type
+     */
     draw() {
         stroke(255);
         switch(this.type) {
@@ -31,6 +34,9 @@ class Cell {
         }
     }
 
+    /**
+     *  Draw a circle centered in the cell
+     */
     drawCircle() {
         ellipse(
             this.i * this.width + this.width / 2,
@@ -40,18 +46,30 @@ class Cell {
         );
     }
 
+    /**
+     *  Color all the cell
+     */
     drawRect() {
         rect(this.i * this.width, this.j * this.height, this.width - 1, this.height - 1);
     }
 
+    /**
+     *  Set the cell to empty
+     */
     empty() {
         this.type = 'empty';
     }
 
+    /**
+     *  Check if the snake can move on this cell
+     */
     isFreeCell() {
         return this.type === 'empty' || this.type === 'food';
     }
 
+    /**
+     *  Check if the cell is empty
+     */
     isEmpty() {
         return this.type === 'empty';
     }

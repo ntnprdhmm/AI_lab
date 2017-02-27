@@ -26,6 +26,9 @@ class Board {
         this.board[this.food.j][this.food.i].type = "food";
     }
 
+    /**
+     *  Draw the grid on the screen
+     */
     draw() {
         // draw each cell of the grid
         for (let j = 0; j < this.rows; j++) {
@@ -35,23 +38,34 @@ class Board {
         }
     }
 
-    updateSnakeDirection(direction) {
+    /**
+     *  Set the snake direction
+     *  @param direction : the new snake direction
+     */
+    setSnakeDirection(direction) {
         this.snake.direction = direction;
     }
 
-    moveSnake() {
+    /**
+     *  Move the snake to his next position
+     */
+    setSnakePosition() {
         // calculate the new position (depending of the direction)
         let nextPosition = this.snake.getNextPosition();
         // if the direction is not valid, kill the snake
         if (!this.isValidMove(nextPosition.i, nextPosition.j)) {
-            this.snake.kill();
+            // remove each part of the snake's tail
+            for (let part of this.snake.kill()) {
+                console.log(part);
+                this.board[part.j][part.i].empty();
+            }
         } else {
             // if it's food, pick it !
             if (this.board[nextPosition.j][nextPosition.i].type == 'food') {
                 this.eatFood();
             } else {
                 // remove the tail on the board
-                let tail = this.snake.getTailPosition();
+                let tail = this.snake.getTailEndPosition();
                 this.board[tail.j][tail.i].empty();
                 // shift the positions to the right and update the snake head
                 this.snake.move(nextPosition);
@@ -60,6 +74,9 @@ class Board {
         }
     }
 
+    /**
+     * When the snake eat the food
+     */
     eatFood() {
         this.snake.eat(this.food.i, this.food.j);
         // remove the food of the board
@@ -86,8 +103,6 @@ class Board {
                 i: Board.getRandomIntInclusive(1, this.cols),
                 j: Board.getRandomIntInclusive(1, this.rows)
             };
-            //console.log(coordinate);
-            //console.log(this.board);
             if (this.board[coordinate.j][coordinate.i].isEmpty()) {
                 return coordinate;
             }
@@ -100,7 +115,7 @@ class Board {
     static getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min +1)) + min;
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 
 }

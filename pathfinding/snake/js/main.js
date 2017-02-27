@@ -1,5 +1,9 @@
 let board;
 
+/**
+ *  P5.js function
+ *  Prepare the canvas
+ */
 function setup() {
     // slow the frame rate
     frameRate(10);
@@ -10,19 +14,28 @@ function setup() {
 	canvas.parent('snake');
 }
 
+/**
+ *  P5.js function
+ *  The game loop
+ */
 function draw() {
     board.draw();
-    board.moveSnake();
+    board.setSnakePosition();
 }
 
+/**
+ *  P5.js function
+ *  Handle the keyboard events
+ */
 function keyPressed() {
+    // when an arrow key is pressed, update the snake position 
     if (keyCode == UP_ARROW) {
-        board.updateSnakeDirection('up');
+        board.setSnakeDirection('up');
     } else if (keyCode == RIGHT_ARROW) {
-        board.updateSnakeDirection('right');
+        board.setSnakeDirection('right');
     } else if (keyCode == DOWN_ARROW) {
-        board.updateSnakeDirection('down');
+        board.setSnakeDirection('down');
     } else if (keyCode == LEFT_ARROW) {
-        board.updateSnakeDirection('left');
+        board.setSnakeDirection('left');
     }
 }
