@@ -14,9 +14,21 @@ class Snake {
         console.log('You died !');
     }
 
-    eat() {
-        //this.size++;
+    eat(i, j) {
+        this.size++;
+        this.positions.unshift({i,j});
         console.log('Food !');
+    }
+
+    /**
+     *  Shift the positions
+     *  @p : the new position
+     */
+    move(p) {
+        for (let i = this.size-1; i > 0; i--) {
+            this.positions[i] = this.positions[i-1];
+        }
+        this.positions[0] = p;
     }
 
     /**

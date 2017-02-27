@@ -49,22 +49,21 @@ class Board {
             // if it's food, pick it !
             if (this.board[nextPosition.j][nextPosition.i].type == 'food') {
                 this.eatFood();
+            } else {
+                // remove the tail on the board
+                let tail = this.snake.getTailPosition();
+                this.board[tail.j][tail.i].empty();
+                // shift the positions to the right and update the snake head
+                this.snake.move(nextPosition);
+                this.board[nextPosition.j][nextPosition.i].type = 'snake head';
             }
-            // remove the tail on the board
-            let tail = this.snake.getTailPosition();
-            this.board[tail.j][tail.i].empty();
-            // first, shift the positions to the right
-
-            // replace the head position and put it on the board
-            this.snake.positions[0] = nextPosition;
-            this.board[nextPosition.j][nextPosition.i].type = 'snake head';
         }
     }
 
     eatFood() {
-        this.snake.eat();
+        this.snake.eat(this.food.i, this.food.j);
         // remove the food of the board
-        this.board[this.food.j][this.food.i].empty();
+        this.board[this.food.j][this.food.i].type = "snake head";
         // generate new food and draw it
         this.food = this.randomEmptyCell();
         this.board[this.food.j][this.food.i].type = 'food';
@@ -84,9 +83,11 @@ class Board {
         // loop while the generated cell is not empty
         while (true) {
             const coordinate = {
-                i: Board.getRandomIntInclusive(1, this.rows),
-                j: Board.getRandomIntInclusive(1, this.cols)
+                i: Board.getRandomIntInclusive(1, this.cols),
+                j: Board.getRandomIntInclusive(1, this.rows)
             };
+            //console.log(coordinate);
+            //console.log(this.board);
             if (this.board[coordinate.j][coordinate.i].isEmpty()) {
                 return coordinate;
             }
