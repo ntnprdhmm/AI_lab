@@ -2,12 +2,18 @@ class Board {
 
     constructor() {
         // define properties
-        this.width = 600;
-        this.height = 500;
-        this.cellWidth = 20;
-        this.cellHeight = 20;
-        this.cols = this.width / this.cellWidth;
-        this.rows = this.height / this.cellHeight;
+        this.width = windowWidth < 800 ? windowWidth : 800;
+        this.height = windowHeight - 200;
+        this.cellWidth = windowWidth < 350 ? 20 : 30;
+        this.cellHeight = this.cellWidth;
+        while (this.width % this.cellWidth) {
+            this.width--;
+        }
+        while (this.height % this.cellHeight) {
+            this.height--;
+        }
+        this.cols = parseInt(this.width / this.cellWidth);
+        this.rows = parseInt(this.height / this.cellHeight);
         // init the board array
         this.board = [];
         for (let j = 0; j < this.rows; j++) {
@@ -69,7 +75,7 @@ class Board {
                 this.board[tail.j][tail.i].empty();
                 // shift the positions to the right and update the snake head
                 this.snake.move(nextPosition);
-                this.board[nextPosition.j][nextPosition.i].type = 'snake head';
+                this.board[nextPosition.j][nextPosition.i].type = 'snake';
             }
         }
     }
@@ -80,7 +86,7 @@ class Board {
     eatFood() {
         this.snake.eat(this.food.i, this.food.j);
         // remove the food of the board
-        this.board[this.food.j][this.food.i].type = "snake head";
+        this.board[this.food.j][this.food.i].type = "snake";
         // generate new food and draw it
         this.food = this.randomEmptyCell();
         this.board[this.food.j][this.food.i].type = 'food';

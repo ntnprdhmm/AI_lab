@@ -19,6 +19,7 @@ function setup() {
  *  The game loop
  */
 function draw() {
+    background(51, 51, 51);
     board.draw();
     board.setSnakePosition();
 }
@@ -28,7 +29,7 @@ function draw() {
  *  Handle the keyboard events
  */
 function keyPressed() {
-    // when an arrow key is pressed, update the snake position 
+    // when an arrow key is pressed, update the snake position
     if (keyCode == UP_ARROW) {
         board.setSnakeDirection('up');
     } else if (keyCode == RIGHT_ARROW) {

@@ -12,23 +12,23 @@ class Cell {
      *  Draw the cell on the screen, depending of his type
      */
     draw() {
-        stroke(255);
+        stroke(51, 51, 51);
         switch(this.type) {
             case 'wall':
-                stroke(0);
-                fill(0);
+                fill(250);
+                stroke(250);
                 this.drawRect();
                 break;
-            case 'snake head':
-                fill(0, 0, 255);
+            case 'snake':
+                fill(245, 0, 87);
                 this.drawRect();
                 break;
             case 'food':
-                fill(0, 255, 0);
+                fill(30, 136, 229);
                 this.drawCircle();
                 break;
-            default: // empty
-                fill(255);
+            default: // empty1
+                fill(51, 51, 51);
                 this.drawRect();
                 break;
         }
