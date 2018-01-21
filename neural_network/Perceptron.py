@@ -10,18 +10,31 @@ If x >= y, the point has the label -1
 This code train a perceptron to guess the right label for a given point.
 """
 
+def f(x, a, b):
+    """ calculate y = ax + b
+
+        Args:
+            x -- float
+            a -- float
+            b -- float
+
+        return y
+    """
+    return  a * x + b
+
 class Point(object):
-    def __init__(self, max_value):
+    def __init__(self, max_value, linear_function, A, B):
         self.x = random()*max_value
         self.y = random()*max_value
-        self.label = -1 if self.x > self.y else 1
+        self.label = 1 if linear_function(self.x, A, B) >= self.y else -1
 
 class Perceptron(object):
     """ Define a simple perceptron with 2 inputs
     """
     def __init__(self):
         self.learning_rate = 0.1
-        self.weights = [0]*2
+        # 2 weights for the point, 1 for the bias
+        self.weights = [0]*3
         # init weights randomly
         for i in range(len(self.weights)):
             self.weights[i] = uniform(-1, 1)
@@ -47,7 +60,7 @@ class Perceptron(object):
             return the guess, an integer
         """
         s = sum(inputs[i]*self.weights[i] for i in range(len(inputs)))
-        return self.activation_function(s)
+        return Perceptron.activation_function(s)
 
     def train(self, inputs, target):
         """ Given the inputs, make the perceptron guess.
@@ -67,23 +80,34 @@ class Perceptron(object):
 
 if __name__ == '__main__':
     GRID_SIZE = 10
+    A = 2
+    B = 5
+    BIAS = 1
+    NB_POINTS_FOR_TRAINING = 150
+    NB_POINTS_TO_PREDICT = 15
 
     # create a new perceptron
     perceptron = Perceptron()
     # train the perceptron
-    points = [None]*100
+    points = [None]*NB_POINTS_FOR_TRAINING
     for i in range(len(points)):
-        point = Point(GRID_SIZE)
-        perceptron.train([point.x, point.y], point.label)
+        point = Point(GRID_SIZE, f, A, B)
+        perceptron.train([point.x, point.y, BIAS], point.label)
         plt.scatter(point.x, point.y, c = 'yellow' if point.label == 1 else 'black', s=25)
         points[i] = point
     # try the perceptron
-    for _ in range(10):
-        point = Point(GRID_SIZE)
-        guess = perceptron.guess([point.x, point.y])
+    for _ in range(NB_POINTS_TO_PREDICT):
+        point = Point(GRID_SIZE, f, A, B)
+        guess = perceptron.guess([point.x, point.y, BIAS])
         print("x:%f y:%f" % (point.x, point.y))
         plt.scatter(point.x, point.y, c='yellow' if guess == 1 else 'black', marker="s", s=80)
     # add a separator line
-    plt.plot([i for i in range (GRID_SIZE+1)])
+    line_points = []
+    for i in range(GRID_SIZE+1):
+        y = f(i, A, B)
+        line_points.append(y)
+        if y > GRID_SIZE:
+            break
+    plt.plot(line_points)
 
     plt.show()
